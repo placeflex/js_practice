@@ -99,31 +99,25 @@ window.addEventListener('DOMContentLoaded', () => {
   // menu day
 
   class MenuDay {
-    // constructor(picture, title, text, price) {
-    //   this.picture = picture;
-    //   this.title = title;
-    //   this.text = text;
-    //   this.price = price;
-    //   {
-    //     picture: '1.png',
-    //     title: '13123213',
-    //     text: '3123123123123123123123',
-    //     price: '111'
-    //   }
-    // }
-
-    constructor(options) {
-      console.log(options);
-      this.selector = document.querySelector(options.selector);
-      this.picture = options.picture;
-      this.title = options.title;
-      this.text = options.text;
-      this.price = options.price;
+    constructor(selector, picture, title, text, price, ...classes) {
+      this.selector = document.querySelector(selector);
+      this.picture = picture;
+      this.title = title;
+      this.text = text;
+      this.price = price;
+      this.classes = classes;
     }
 
     render() {
       const element = document.createElement('div');
-      element.innerHTML = `<div class="menu__item">
+
+      if (this.classes.length === 0) {
+        this.element = 'menu__item';
+        element.classList.add(this.element);
+      } else {
+        this.classes.forEach((className) => element.classList.add(className));
+      }
+      element.innerHTML = `
       <img src="${this.picture}" alt="vegy">
       <h3 class="menu__item-subtitle">${this.title}</h3>
       <div class="menu__item-descr">${this.text}</div>
@@ -131,34 +125,30 @@ window.addEventListener('DOMContentLoaded', () => {
       <div class="menu__item-price">
           <div class="menu__item-cost">Цена:</div>
           <div class="menu__item-total"><span>${this.price}</span> грн/день</div>
-      </div>
-  </div>`;
-
+      </div>`;
       this.selector.append(element);
     }
   }
-  new MenuDay({
-    selector: '.menu__field .container',
-    picture: 'img/tabs/post.jpg',
-    title: 'Меню "Постное"',
-    text:
-      'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков. ',
-    price: 430,
-  }).render();
-  new MenuDay({
-    selector: '.menu__field .container',
-    picture: 'img/tabs/elite.jpg',
-    title: 'Меню "Премиум"',
-    text:
-      'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!',
-    price: 550,
-  }).render();
-  new MenuDay({
-    selector: '.menu__field .container',
-    picture: 'img/tabs/vegy.jpg',
-    title: 'Меню "Фитнес"',
-    text:
-      'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
-    price: 229,
-  }).render();
+  new MenuDay(
+    '.menu__field .container',
+    'img/tabs/post.jpg',
+    'Меню "Постное"',
+    'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков. ',
+    430
+  ).render();
+
+  new MenuDay(
+    '.menu__field .container',
+    'img/tabs/elite.jpg',
+    'Меню "Премиум"',
+    'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!',
+    550
+  ).render();
+  new MenuDay(
+    '.menu__field .container',
+    'img/tabs/vegy.jpg',
+    'Меню "Фитнес"',
+    'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
+    229
+  ).render();
 });
